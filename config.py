@@ -1,0 +1,6 @@
+class Config:
+    NUM_CLIENTS = 3
+    BATCH_SIZE = 32
+    NUM_ROUNDS = 5
+    LOCAL_EPOCHS = 2
+    LEARNING_RATE = 0.0002
