@@ -15,7 +15,8 @@ def encrypt_data(model_state):
 def decrypt_data(encrypted_data):
     decrypted_data = cipher.decrypt(encrypted_data)
     buffer = io.BytesIO(decrypted_data)
-    return torch.load(buffer)
+    return torch.load(buffer, weights_only=True)
+
 
 def aggregate_weights(client_weights):
     global_model = copy.deepcopy(client_weights[0])
