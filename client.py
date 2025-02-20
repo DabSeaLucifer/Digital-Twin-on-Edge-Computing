@@ -21,6 +21,7 @@ class FederatedClient:
 
     def train(self, epochs=5):
         """ Train SGAN locally and send model updates to the server. """
+        total_loss_G, total_loss_D, batch_count = 0.0, 0.0, 0
         for epoch in range(epochs):
             for real_images, _ in self.train_loader:
                 real_images = real_images.to(self.device)
@@ -41,9 +42,18 @@ class FederatedClient:
                 loss_G = -torch.mean(fake_preds)
                 loss_G.backward()
                 self.optim_G.step()
+                total_loss_D += loss_D.item()
+                total_loss_G += loss_G.item()
+                batch_count += 1
+
+        avg_loss_G = total_loss_G / batch_count if batch_count > 0 else 0
+        avg_loss_D = total_loss_D / batch_count if batch_count > 0 else 0
 
         return {
             "generator_weights": encrypt_data(self.generator.state_dict()),
             "discriminator_weights": encrypt_data(self.discriminator.state_dict()),
-            "client_id": self.client_id
+            "client_id": self.client_id,
+            "avg_loss_G": avg_loss_G,
+            "avg_loss_D": avg_loss_D,
+            "samples_trained": len(self.train_dataset)
         }
