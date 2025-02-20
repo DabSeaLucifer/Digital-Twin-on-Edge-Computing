@@ -23,8 +23,9 @@ class MiniBatchDiscrimination(nn.Module):
 
     def forward(self, x):
         m = x @ self.T
-        dist = torch.abs(m.unsqueeze(0) - m.unsqueeze(1)).sum(dim=2)
-        return torch.cat([x, torch.exp(-dist).sum(dim=1)], dim=1)
+        diff = torch.abs(m.unsqueeze(1) - m.unsqueeze(0))  
+        o = torch.exp(-diff).sum(dim=1)
+        return torch.cat([x, o], dim=1)
 
 class Discriminator(nn.Module):
     def __init__(self, input_dim=3*32*32):  # CIFAR-10 size
