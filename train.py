@@ -5,7 +5,7 @@ import torch
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 server = FederatedServer(device)
-clients = [FederatedClient(i, device) for i in range(3)]  # 3 FL Clients
+clients = [FederatedClient(i, device) for i in range(3)]  # no. of FL Clients
 
 num_rounds = 5
 
