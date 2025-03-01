@@ -26,7 +26,7 @@ class FederatedClient:
             for real_images, _ in self.train_loader:
                 real_images = real_images.to(self.device)
 
-                # Train Discriminator
+                # Discriminator training
                 self.optim_D.zero_grad()
                 fake_images = self.generator(torch.randn(real_images.size(0), 100, device=self.device))
                 real_preds = self.discriminator(real_images)
@@ -36,7 +36,7 @@ class FederatedClient:
                 loss_D.backward()
                 self.optim_D.step()
 
-                # Train Generator
+                # Generator training
                 self.optim_G.zero_grad()
                 fake_preds = self.discriminator(fake_images)
                 loss_G = -torch.mean(fake_preds)
