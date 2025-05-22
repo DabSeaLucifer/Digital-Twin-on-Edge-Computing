@@ -1,3 +1,9 @@
+
+"""
+implemented FedProx, SGAN components (FeatureDrop, MBD),
+Loss-based Client Selection, enhanced client-returned metrics, and server-side loss graphing.
+"""
+
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -23,7 +29,7 @@ LEARNING_RATE_D = 2e-5
 LEARNING_RATE_G = 2e-6
 LAMBDA_FM = 1.0 # Feature Matching loss weight
 NUM_ROUNDS = 10
-NUM_CLIENTS = 4 # Total number of clients AVAILABLE
+NUM_CLIENTS = 4 # Total number of clients available
 CLIENTS_PER_ROUND_ACTUAL = 4 # Number of clients to actually select per round
 LOCAL_EPOCHS = 2
 NUM_LABELED = 100 # Number of labeled samples for the first client
